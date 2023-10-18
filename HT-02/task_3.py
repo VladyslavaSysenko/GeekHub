@@ -4,9 +4,7 @@
 number = int(input("Write a number:"))
 
 # Find sum of first <number> positive integers
-total = 0
-for i in range(1, number + 1):
-    total += i
+total = sum(range(1, number + 1))
 
 # Print result
 print(f"Sum of first {number} positive integers = {total}")
