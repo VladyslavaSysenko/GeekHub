@@ -3,7 +3,7 @@
 # elements in the tuples must be different.
 
 # Hardcoded list of tuples
-list_tuples = [(True, False), (1, 2, 3), ("a", "b", "c", "d"), (-5, "hi", 25, True, 5555)]
+list_tuples = [(1, 5, True), ("aaa", 2), (0,), ()]
 
 # User input
 replacement = input("Write a replacement value:")
@@ -11,7 +11,10 @@ replacement = input("Write a replacement value:")
 # Create new list with changed last elements
 new_list = []
 for tpl in list_tuples:
-    new_list.append(tpl[:-1] + (replacement,))
+    if tpl:
+        new_list.append(tpl[:-1] + (replacement,))
+    else:
+        new_list.append(tpl)
 
 # Print list
 print(f"Old list: {list_tuples}")
