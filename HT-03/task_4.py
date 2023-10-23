@@ -8,8 +8,7 @@ dict_2 = {"dou": "jones", "USD": 36}
 dict_3 = {"AUD": 19.2, "name": "Tom"}
 
 for dict in [dict_2, dict_3]:
-    for key, value in dict.items():
-        dict_1.update({key: value})
+    dict_1.update(dict)
 
 # Print result
 print(f"New dictionary: {dict_1}")

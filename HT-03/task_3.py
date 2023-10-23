@@ -10,8 +10,7 @@ dict_3 = {"AUD": 19.2, "name": "Tom"}
 new_dict = {}
 
 for dict in [dict_1, dict_2, dict_3]:
-    for key, value in dict.items():
-        new_dict.update({key: value})
+    new_dict.update(dict)
 
 # Print result
 print(f"New dictionary: {new_dict}")
