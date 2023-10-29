@@ -6,7 +6,7 @@
 
 
 def calculator(num_1: float, op: str, num_2: float) -> str:
-    result = ""
+    result = 0
     try:
         match op:
             case "+":
