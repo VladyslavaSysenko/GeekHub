@@ -5,7 +5,18 @@
 # значеннями на предмет помилок!
 
 
-def calculator(num_1: float, op: str, num_2: float) -> str:
+def calculator() -> str:
+    # Get user input
+    num_1 = input("Enter the first number:")
+    op = input("Enter operand:")
+    num_2 = input("Enter the second number:")
+    # Check for correct input type
+    try:
+        num_1 = float(num_1)
+        num_2 = float(num_2)
+    except ValueError:
+        return "Numbers must be int or float"
+    # Calculate
     result = 0
     try:
         match op:
@@ -23,18 +34,13 @@ def calculator(num_1: float, op: str, num_2: float) -> str:
                 result = num_1 % num_2
             case "//":
                 result = num_1 // num_2
+            # Error if wrong operand
+            case _:
+                return "Operand must be +, -, *, **, /, // or %"
     except ZeroDivisionError:
         return "You cannot divide by zero!"
     else:
         return f"{num_1} {op} {num_2} = {result}"
 
 
-print(calculator(-1.5, "+", 2))
-print(calculator(-1.5, "-", 2))
-print(calculator(-1, "*", 2))
-print(calculator(-1.5, "**", 2))
-print(calculator(-11.5, "/", 2))
-print(calculator(-11.5, "//", 2))
-print(calculator(-11, "%", 2))
-print(calculator(-11, "%", 2))
-print(calculator(-1, "//", 0))
+print(calculator())

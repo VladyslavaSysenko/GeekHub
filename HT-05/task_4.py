@@ -10,8 +10,9 @@ import string
 
 
 def work_with_row(row: str) -> str:
+    len_row = len(row)
     # Return sum of all numbers and row with only letters
-    if len(row) < 30:
+    if len_row < 30:
         # Replace non number characters with space e.g. "0f12g.g1.5p -5.0k!" -> "0 12  . 1.5 -5.0  "
         str_num = "".join((ch if ch in "0123456789-." else " ") for ch in row)
         # Split string and save only numbers (e.g. skip only ".")
@@ -26,7 +27,7 @@ def work_with_row(row: str) -> str:
         return f"sum = {sum(list_num)}    {str_ltr}"
 
     # Return len of row, amount of letters and digits
-    if 29 < len(row) < 51:
+    if 29 < len_row < 51:
         # Calculate amount of letters and digits
         letters = digits = 0
         for ch in row:
@@ -34,21 +35,21 @@ def work_with_row(row: str) -> str:
                 digits += 1
             elif ch.isalpha():
                 letters += 1
-        return f"length = {len(row)}, amount of letters = {letters} and amount of digits = {digits}"
+        return f"length = {len_row}, amount of letters = {letters} and amount of digits = {digits}"
 
     # Return digits or letters that are not in the row
-    if len(row) > 50:
+    if len_row > 50:
         alphabet = list(string.ascii_lowercase)
-        digits = list("0123456789")
-        row = row.lower()
+        digits = list(string.digits)
+        row = set(row.lower())
         not_found_ltr, not_found_dgt = [], []
         # Find not used letters
         for el in alphabet:
-            if row.find(el) == -1:
+            if el not in row:
                 not_found_ltr.append(el)
         # Find not used digits
         for el in digits:
-            if row.find(el) == -1:
+            if el not in row:
                 not_found_dgt.append(el)
         # Return result
         letter = ", ".join(not_found_ltr) if len(not_found_ltr) != 0 else "all used!"

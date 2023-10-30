@@ -4,6 +4,12 @@
 
 
 def season(month: int) -> str:
+    seasons = {
+        "Winter": [12, 1, 2],
+        "Spring": [3, 4, 5],
+        "Summer": [6, 7, 8],
+        "Autumn": [9, 10, 11],
+    }
     # Error if month is not int
     if not isinstance(month, int):
         return "Month number must be integer!"
@@ -12,14 +18,9 @@ def season(month: int) -> str:
         return "Month numbers are 1 - 12"
     # Get season from number
     else:
-        if month == 12 or month < 3:
-            return "Winter"
-        elif month > 2 and month < 6:
-            return "Spring"
-        elif month > 5 and month < 9:
-            return "Summer"
-        elif month > 8 and month < 12:
-            return "Autumn"
+        for season, value in seasons.items():
+            if month in value:
+                return season
 
 
 print(season("cat"))

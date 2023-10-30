@@ -7,7 +7,17 @@
 #     x == y.      вiдповiдь - "х дорiвнює z"
 
 
-def equality(x: float, y: float) -> str:
+def equality() -> str:
+    # Get user input
+    x = input("Enter X:")
+    y = input("Enter Y:")
+    # Check for correct input type
+    try:
+        x = float(x)
+        y = float(y)
+    except ValueError:
+        return "Numbers must be int or float"
+    # Compare numbers
     if x == y:
         return f"{x} equals {y}"
     if x > y:
@@ -16,6 +26,4 @@ def equality(x: float, y: float) -> str:
         return f"{x} is less than {y} by {y - x}"
 
 
-print(equality(x=2, y=4))
-print(equality(x=3, y=3))
-print(equality(x=5, y=-1))
+print(equality())
