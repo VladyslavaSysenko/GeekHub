@@ -23,7 +23,7 @@ def work_with_row(row: str) -> str:
             except ValueError:
                 pass
         # Delete non letters
-        str_ltr = "".join((ch if ch.isalpha() else "") for ch in row)
+        str_ltr = "".join(ch for ch in row if ch.isalpha())
         return f"sum = {sum(list_num)}    {str_ltr}"
 
     # Return len of row, amount of letters and digits
