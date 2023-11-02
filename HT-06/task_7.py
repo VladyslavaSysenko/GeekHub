@@ -38,7 +38,7 @@ def similar_2(lst: list) -> str:
         # Check for duplicates
         for pos, elem in enumerate(lst):
             if type(variable) == type(elem) and variable == elem:
-                del lst[pos]
+                lst.pop(pos)
                 amount += 1
         # Explicitly define strings
         result.append(f"{variable!r} -> {amount}")
