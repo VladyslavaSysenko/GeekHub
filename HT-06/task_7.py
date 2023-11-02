@@ -36,20 +36,17 @@ def similar_2(lst: list) -> str:
         variable = lst.pop(0)
         amount = 1
         # Check for duplicates
-        for elem in lst:
-            if isinstance(variable, type(elem)) and variable == elem:
-                lst.remove(elem)
+        for pos, elem in enumerate(lst):
+            if type(variable) == type(elem) and variable == elem:
+                del lst[pos]
                 amount += 1
         # Explicitly define strings
-        if isinstance(variable, str):
-            result.append(f"'{variable}' -> {amount}")
-        else:
-            result.append(f"{variable} -> {amount}")
+        result.append(f"{variable!r} -> {amount}")
     return ", ".join(result)
 
 
 print(similar_1("d"))
-print(similar_1([1, "1", "foo", [1, 2, [1, 3]], True, "foo", 1, [1, 2, [1, 3]], [1, 2, [1, 3]]]))
+print(similar_1([True, 1, "1", "foo", [1, 2, [1, 3]], True, "foo", 1, [1, 2, [1, 3]]]))
 
 print(similar_2("d"))
-print(similar_2([1, "1", "foo", [1, 2, [1, 3]], True, "foo", 1, [1, 2, [1, 3]], [1, 2, [1, "3"]]]))
+print(similar_2([True, 1, "1", "foo", [1, 2, [1, 3]], True, "foo", 1, [1, 2, [1, 3]]]))
