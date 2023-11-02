@@ -14,7 +14,7 @@ def shift_list(lst: list, shift: int):
     # Delete whole cycles of shift while can
     len_lst = len(lst)
     while shift > len_lst:
-        shift = shift - len_lst
+        shift -= len_lst
     # Move
     lst = lst[-shift:] + lst[:-shift]
     return lst
