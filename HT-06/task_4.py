@@ -3,39 +3,35 @@
 # введених даних та у випадку невідповідності - виведіть повідомлення.
 
 
-def check_type(start: int, end: int):
-    if not (isinstance(start, int) and isinstance(end, int)):
-        return "Numbers must be int"
-    return True
+def value_is_int(value) -> bool:
+    return isinstance(value, int)
 
 
-def check_value(start: int, end: int):
-    if start >= end:
-        return "Start number must be bigger than end number"
-    return True
+def start_less_than_end(start: int, end: int) -> bool:
+    return start < end
 
 
-def prime_list(start: int, end: int):
-    # Check input type and value
-    type_message = check_type(start=start, end=end)
-    value_message = check_value(start=start, end=end)
-    if type_message is True:
-        if value_message is True:
-            # Get prime numbers
-            result = []
-            for num in range(start, end + 1):
-                if num > 1:
-                    for i in range(2, num // 2 + 1):
-                        if num % i == 0:
-                            break
-                    else:
-                        result.append(num)
-            return result
-
-        else:
-            return value_message
+def is_prime(num: int) -> bool:
+    for i in range(2, num // 2 + 1):
+        if num % i == 0:
+            return False
     else:
-        return type_message
+        return True
+
+
+def prime_list(start: int, end: int) -> list | str:
+    # Check input type and value
+    if not value_is_int(value=start) or not value_is_int(value=end):
+        return "Numbers must be int"
+    if not start_less_than_end(start=start, end=end):
+        return "Start number must be bigger than end number"
+
+    # Get prime numbers
+    result = []
+    for num in range(start, end + 1):
+        if num > 1 and is_prime(num):
+            result.append(num)
+    return result
 
 
 print(prime_list(1.1, 25))

@@ -2,28 +2,29 @@
 # True, якщо це число просте і False - якщо ні.
 
 
-def check_type(num: int):
-    if not isinstance(num, int):
+def is_int(num) -> bool:
+    return isinstance(num, int)
+
+
+def num_in_range(num: int) -> bool:
+    return num > -1 and num < 1001
+
+
+def is_prime(num: int) -> bool | str:
+    # Check input type and if it is in range 0 - 1000
+    if not is_int(num=num):
         return "Number must be int"
-    elif num < 1 or num > 1001:
+    if not num_in_range(num=num):
         return "Number must 0 - 1000"
-    return "OK"
 
-
-def is_prime(num: int):
-    # Check input type
-    message = check_type(num=num)
-    if message == "OK":
-        # Check half of numbers
-        if num == 1:
-            return False
-        else:
-            for i in range(2, num // 2 + 1):
-                if num % i == 0:
-                    return False
-            return True
+    # Check half of numbers
+    if num == 1:
+        return False
     else:
-        return message
+        for i in range(2, num // 2 + 1):
+            if num % i == 0:
+                return False
+        return True
 
 
 print(is_prime("d"))
