@@ -26,18 +26,23 @@ def login(username: str, password: str, silent: bool = False) -> bool | str:
         return "Username and password must be str, silent must be bool"
 
     # Hardcoded list of users
-    users = [("Bob", "123"), ("Tom", "456"), ("Anne", "789"), ("Kate", "qwerty"), ("Sam", "fFf")]
+    users = [
+        {"username": "Bob", "password": "123"},
+        {"username": "Tom", "password": "456"},
+        {"username": "Anne", "password": "789"},
+        {"username": "Kate", "password": "qwerty"},
+        {"username": "Sam", "password": "fFf"},
+    ]
 
     # Correct login
     for user in users:
-        if user[0] == username and user[1] == password:
+        if user["username"] == username and user["password"] == password:
             return True
     # Incorrect login
+    if silent:
+        return False
     else:
-        if silent:
-            return False
-        else:
-            raise LoginException("Username or password is incorrect")
+        raise LoginException("Username or password is incorrect")
 
 
 print(login(username="Bob", password=123))
