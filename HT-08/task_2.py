@@ -2,5 +2,5 @@
 # елемент якого буде дорівнювати 10.
 #    Результат: [19, 28, 37, 46, 55, 64, 73, 82, 91]
 
-row = [i for i in range(0, 100) if i > 9 and int(str(i)[0]) + int(str(i)[1]) == 10]
+row = [i for i in range(0, 100) if i > 9 and sum(map(int, str(i))) == 10]
 print(row)

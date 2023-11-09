@@ -17,41 +17,38 @@
 from typing import Generator
 
 
+# Check if arguments are int
 def is_int(*args) -> None:
     for value in args:
         if not isinstance(value, int):
             raise TypeError(f"'{type(value).__name__}' object cannot be interpreted as an integer")
 
 
+# Check if step is not zero
 def step_is_not_zero(step) -> None:
     if step == 0:
         raise ValueError("my_range() arg 3 must not be zero")
 
 
-def assign_arguments(*args) -> tuple:
-    len_args = len(args)
-    if len_args == 0:
+# Error if no arguments
+def no_arguments(start) -> None:
+    if start is None:
         raise TypeError("my_range expected at least 1 arguments, got 0")
-    elif len_args > 3:
-        raise TypeError(f"my_range expected at most 3 arguments, got {len_args}")
-    # Correct amount of arguments
-    else:
-        is_int(*args)
-        if len_args == 1:
-            # start = 0, stop = arg, step = 1
-            return 0, args[0], 1
-        elif len_args == 2:
-            # start = arg, stop = arg, step = 1
-            return args[0], args[1], 1
-        else:
-            step_is_not_zero(args[2])
-            # start = arg, stop = arg, step = arg
-            return args[0], args[1], args[2]
 
 
-def my_range(*args) -> Generator:
-    # Assign arguments accordingly
-    start, stop, step = assign_arguments(*args)
+def check_arguments(start, stop, step) -> tuple:
+    no_arguments(start)
+    # If only one argument than it is stop
+    if stop is None:
+        start, stop = 0, start
+    is_int(start, stop, step)
+    step_is_not_zero(step)
+    return start, stop, step
+
+
+def my_range(start=None, stop=None, step=1, /) -> Generator:
+    # Check and assign arguments accordingly
+    start, stop, step = check_arguments(start=start, stop=stop, step=step)
     # Calculate
     i = 0
     if step > 0:
@@ -76,7 +73,6 @@ def my_range(*args) -> Generator:
 # print(list(my_range(5.5)))
 # print(list(my_range(1, 5, 0)))
 
-print(my_range(3))
 print(list(my_range(3)))
 print(list(my_range(3, 8)))
 print(list(my_range(3, 8, 2)))
