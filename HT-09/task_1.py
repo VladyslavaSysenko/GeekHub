@@ -26,25 +26,28 @@ def is_int(*args) -> None:
         raise TypeError("Seconds for car light must be int.")
 
 
+def print_light(car_light: str, seconds: int):
+    # Print car and pedestrian light every 1 second
+    for _ in range(0, seconds):
+        ped_light = "Green" if car_light == "Red" else "Red"
+        print(f"{car_light:15}{ped_light}")
+        time.sleep(1)
+
+
 def traffic_light(green: int = 5, yellow: int = 1, red: int = 3):
     is_int(green, yellow, red)
 
-    # Calculate and store seconds for each light
-    gr_yel = green + yellow
-    gr_yel_red = gr_yel + red
+    # Store order of lights for cars
     lights = [
-        {"car_light": "Green", "ped_light": "Red", "seconds": range(0, green + 1)},
-        {"car_light": "Yellow", "ped_light": "Red", "seconds": range(green + 1, gr_yel + 1)},
-        {"car_light": "Red", "ped_light": "Green", "seconds": range(gr_yel + 1, gr_yel_red + 1)},
+        {"car_light": "Green", "seconds": green},
+        {"car_light": "Yellow", "seconds": yellow},
+        {"car_light": "Red", "seconds": red},
+        {"car_light": "Yellow", "seconds": yellow},
     ]
 
     while True:
-        for second in range(1, sum([green, yellow, red]) + 1):
-            for light in lights:
-                if second in light["seconds"]:
-                    print(f'{light["car_light"]:15}{light["ped_light"]}')
-                    time.sleep(1)
-                    break
+        for light in lights:
+            print_light(light["car_light"], light["seconds"])
 
 
 # traffic_light(5, "s", 6)

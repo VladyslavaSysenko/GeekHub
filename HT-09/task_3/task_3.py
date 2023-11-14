@@ -59,8 +59,12 @@ def ATM():
                 # Get money to deposit from user
                 money = get_input_sum()
                 # Wrong input type
-                if not money:
+                if money is False:
                     print("Deposited amount of money must be integer.", end="\n\n")
+                    continue
+                # Check if positive amount
+                if not is_positive(num=money):
+                    print("Deposited amount of money must be bigger than 0.", end="\n\n")
                     continue
                 # Deposit money
                 balance = deposit_withdraw(action=action, money=money, username=username)
@@ -72,8 +76,12 @@ def ATM():
                 # Get money to withdraw from user
                 money = get_input_sum()
                 # Wrong input type
-                if not money:
+                if money is False:
                     print("Amount of money to withdraw must be integer.", end="\n\n")
+                    continue
+                # Check if positive amount
+                if not is_positive(num=money):
+                    print("Amount of money to withdraw must be bigger than 0.", end="\n\n")
                     continue
                 # Not enough money in balance
                 if not is_enough_in_balance(username=username, needed_money=money):
@@ -194,6 +202,12 @@ def can_be_int(value) -> int | Literal[False]:
     except ValueError:
         value = False
     return value
+
+
+def is_positive(num: int) -> bool:
+    """Check if number is bigger than 0"""
+
+    return num > 0
 
 
 def is_enough_in_balance(username: str, needed_money: int) -> bool:
