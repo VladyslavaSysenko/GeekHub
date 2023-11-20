@@ -1,0 +1,112 @@
+from typing import Literal
+
+from helper import add_transaction, add_user, get_user, update_balance
+from validations import (
+    can_be_int,
+    is_correct_type,
+    is_existing_user,
+    is_possible_auth_action,
+    is_possible_user_action,
+    is_valid_register,
+)
+
+
+def get_login_or_register() -> str | Literal[False]:
+    """Get desired action from user if user needs login or register"""
+
+    # Get user action
+    num = input(
+        "Available actions:\n\t1. Log in\n\t2. Register\nEnter number of the desired action:"
+    )
+    # Add new line for nice visual
+    print("")
+    # Return action or False
+    return is_possible_auth_action(num)
+
+
+def register() -> str | Literal[False]:
+    """Register user"""
+
+    # Add new line for nice visual
+    print("")
+    # Get user username and password
+    print("To register, please type:")
+    username = input("Username (must be 3 - 50 symbols long):")
+    password = input(
+        "Password (must be 8+ symbols long, have at least 1 number and 1 letter and not contain"
+        " username):"
+    )
+    # Add new line for nice visual
+    print("")
+
+    # Check if valid input
+    message = is_valid_register(username=username, password=password)
+    if message is not True:
+        return {"message": message}
+    # Add user to database
+    add_user(username=username, password=password)
+    return {"username": username}
+
+
+def login() -> str | Literal[False]:
+    """Log in user"""
+
+    # Get user username and password
+    username = input("Username:")
+    password = input("Password:")
+    # Add new line for nice visual
+    print("")
+
+    # Check input type
+    if not (is_correct_type(username, str) and is_correct_type(password, str)):
+        return "Username and password must be strings."
+
+    # Search for user with such username and password
+    return username if is_existing_user(username=username, password=password) else False
+
+
+def get_user_action() -> str | Literal[False]:
+    """Get desired action from user"""
+
+    # Get user action
+    num = input(
+        "Available actions:\n\t"
+        "1. View card balance\n\t"
+        "2. Deposit money\n\t"
+        "3. Withdraw money\n\t"
+        "4. Exit\n"
+        "Enter number of the desired action:"
+    )
+    # Add new line for nice visual
+    print("")
+    # Return action or False
+    return is_possible_user_action(num)
+
+
+def get_input_sum() -> int | Literal[False]:
+    """Get amount of money from user"""
+
+    # Get amount of money
+    money = input("Enter amount of money:")
+    # Add new line for nice visual
+    print("")
+    # Check if input can be integer
+    money = can_be_int(value=money)
+    return money
+
+
+def deposit_withdraw(action: str, money: int, username: str) -> int:
+    """Deposit or withdraw money. Action can be 'deposit' or 'withdraw'"""
+
+    # Update balance
+    balance = get_user(username=username)["balance"]
+    new_balance = balance + money if action == "deposit" else balance - money
+    update_balance(username=username, new_balance=new_balance)
+
+    # Write transaction
+    if action == "withdraw":
+        money = money * -1
+    add_transaction(username=username, money=money)
+
+    # Return balance
+    return new_balance
