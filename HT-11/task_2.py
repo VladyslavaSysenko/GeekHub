@@ -6,10 +6,9 @@
 
 
 class Person:
-    def __init__(self, *, name=None, age=None, **kwargs) -> None:
+    def __init__(self, *, name=None, age=None) -> None:
         self.age = age
         self.name = name
-        self.__dict__.update(kwargs)
 
     def show_age(self) -> None:
         print(f"age: {self.age}")
@@ -22,12 +21,14 @@ class Person:
             print(f"{key}: {value}")
 
 
-student1 = Person(name="Kate", age=20, profession="Chemist", color="Red")
+student1 = Person(name="Kate", age=20)
+student1.profession = "Chemist"
 student1.show_age()
 student1.show_name()
 student1.show_all_information()
 
-student1 = Person(name="Bob", age=43, profession="Artist")
+student1 = Person(name="Bob", age=43)
+student1.profession = "Artist"
 student1.show_age()
 student1.show_name()
 student1.show_all_information()

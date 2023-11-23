@@ -31,9 +31,10 @@ def correct_type(method):
         if message is not True:
             self.last_result = self._new_result
             self._new_result = "Numbers must be integers or floats."
+            return self._new_result
         else:
             # the actual method call
-            method(self, *args)
+            return method(self, *args)
 
     return wrapper
 
@@ -52,13 +53,13 @@ class Calc:
     Methods
     -------
     addition(x:float, y:float)
-        Makes last_result _new_result and _new_result addition of x and y
+        Makes last_result _new_result and _new_result addition of x and y.Returns result of operation.
     subtraction(x:float, y:float)
-        Makes last_result _new_result and _new_result subtraction of x and y
+        Makes last_result _new_result and _new_result subtraction of x and y. Returns result of operation.
     multiplication(x:float, y:float)
-        Makes last_result _new_result and _new_result multiplication of x and y
+        Makes last_result _new_result and _new_result multiplication of x and y. Returns result of operation.
     division(x:float, y:float)
-        Makes last_result _new_result and _new_result division of x on y
+        Makes last_result _new_result and _new_result division of x on y. Returns result of operation.
     """
 
     def __init__(self) -> None:
@@ -78,6 +79,7 @@ class Calc:
         """Makes last_result _new_result and _new_result addition of x and y
 
         _new_result will be "Numbers must be integers or floats." in case of wrong type of parameters.
+        Returns result of operation.
 
         Parameters
         ----------
@@ -88,12 +90,14 @@ class Calc:
         """
         self.last_result = self._new_result
         self._new_result = x + y
+        return self._new_result
 
     @correct_type
     def subtraction(self, x: float, y: float) -> None:
         """Makes last_result _new_result and _new_result subtraction of x and y
 
         _new_result will be "Numbers must be integers or floats." in case of wrong type of parameters.
+        Returns result of operation.
 
         Parameters
         ----------
@@ -104,12 +108,14 @@ class Calc:
         """
         self.last_result = self._new_result
         self._new_result = x - y
+        return self._new_result
 
     @correct_type
     def multiplication(self, x: float, y: float) -> None:
         """Makes last_result _new_result and _new_result multiplication of x and y
 
         _new_result will be "Numbers must be integers or floats." in case of wrong type of parameters.
+        Returns result of operation.
 
         Parameters
         ----------
@@ -120,6 +126,7 @@ class Calc:
         """
         self.last_result = self._new_result
         self._new_result = x * y
+        return self._new_result
 
     @correct_type
     def division(self, x: float, y: float) -> None:
@@ -127,6 +134,7 @@ class Calc:
 
         _new_result will be "Numbers must be integers or floats." in case of wrong type of parameters.
         _new_result will be "Cannot divide by zero." in case of division by zero.
+        Returns result of operation.
 
         Parameters
         ----------
@@ -140,6 +148,8 @@ class Calc:
             self._new_result = x / y
         except ZeroDivisionError:
             self._new_result = "Cannot divide by zero."
+        finally:
+            return self._new_result
 
 
 calc = Calc()
@@ -156,3 +166,15 @@ calc.division(1, 0)
 print(calc.last_result)
 calc.subtraction(1, 2)
 print(calc.last_result)
+
+print("*" * 10)
+
+calc = Calc()
+print(calc.last_result)
+print(calc.addition(1, 2.5))
+print(calc.last_result)
+print(calc.subtraction(1, 2))
+print(calc.last_result)
+print(calc.multiplication(5, 5))
+print(calc.last_result)
+print(calc.addition("k", 0))
