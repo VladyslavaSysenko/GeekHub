@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 from requests import Response
 
 
-def get_domains() -> None:
+def save_domains() -> None:
     domain_num = 0
 
     with open("domains.csv", "w", encoding="utf-8", newline="") as csvfile:
@@ -20,7 +20,7 @@ def get_domains() -> None:
 
         while True:
             print(f"Get domain names from {domain_num} to {domain_num + 25}")
-            response = get_response(domain_num=domain_num)
+            response = get_domains_page(domain_num=domain_num)
             soup = BeautifulSoup(response.text, "lxml")
 
             if not soup.select_one(".field_domain"):
@@ -33,7 +33,7 @@ def get_domains() -> None:
             time.sleep(random.uniform(5, 15))
 
 
-def get_response(domain_num: int) -> Response:
+def get_domains_page(domain_num: int) -> Response:
     headers = {
         "authority": "www.expireddomains.net",
         "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
@@ -49,4 +49,4 @@ def get_response(domain_num: int) -> Response:
     return response
 
 
-get_domains()
+save_domains()

@@ -12,7 +12,7 @@ import requests
 from requests import Response
 
 
-def get_category_items(id: int) -> None:
+def save_category_items(id: int) -> None:
 
     with open(f"{id}_products.csv", "w", encoding="utf-8", newline="") as csvfile:
         fieldnames = ["brand", "name", "old_price", "new_price", "store"]
@@ -25,7 +25,7 @@ def get_category_items(id: int) -> None:
 
         while True:
             print(f"Getting items from {start_index} to {end_index}")
-            response = get_response(start_index=start_index, end_index=end_index, id=id)
+            response = get_category_page(start_index=start_index, end_index=end_index, id=id)
 
             # Check if error
             try:
@@ -55,7 +55,7 @@ def get_category_items(id: int) -> None:
             time.sleep(2)
 
 
-def get_response(start_index: int, end_index: int, id: int) -> Response:
+def get_category_page(start_index: int, end_index: int, id: int) -> Response:
     headers = {
         "authority": "www.sears.com",
         "accept": "application/json, text/plain, */*",
@@ -71,5 +71,5 @@ def get_response(start_index: int, end_index: int, id: int) -> Response:
     return response
 
 
-# get_category_items(id=1100113)
-get_category_items(id=1021346)
+# save_category_items(id=1100113)
+save_category_items(id=1021346)
