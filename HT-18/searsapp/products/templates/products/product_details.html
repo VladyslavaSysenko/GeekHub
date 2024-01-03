@@ -1,0 +1,16 @@
+{% extends "products/layout.html" %}
+
+{% block title %}Product Details{% endblock %}
+
+{% block body %}
+<div>
+    <h3>{{ product.name }}</h3>
+    <p>Description: {{ product.description|safe }}</p>
+    <p>Current Price: {{ product.current_price }}</p>
+    <p>Old Price: {{ product.old_price }}</p>
+    <p>Brand: {{ product.brand }}</p>
+    <p>Store: {{ product.store }}</p>
+    <p>Category: {{ product.category }}</p>
+    <a href="{{ product.link }}">View Product</a>
+</div>
+{% endblock %}

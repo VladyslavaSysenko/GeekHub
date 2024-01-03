@@ -1,0 +1,23 @@
+{% extends "products/layout.html" %}
+
+{% block title %}My Products{% endblock %}
+
+{% block body %}
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in my_products %}
+            <tr>
+                <td><a href="{% url 'products:product_details' product.id %}">{{ product.name }}</a></td>
+                <td>{{ product.current_price }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
