@@ -5,7 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import View, generic
 
 from .forms import CreateProductForm
-from .models import Product
+from .models import Product, ScrapingTask
 from .services import is_valid_ids, save_scraped_products
 
 
@@ -46,9 +46,10 @@ class ProductCreateView(View):
                 )
                 return HttpResponseRedirect(reverse("products:add_product"))
 
-            product_ids = form.cleaned_data["ids"].split(",")
+            # Create scraping task with input ids
+            task = ScrapingTask.objects.create(product_ids=form_ids)
 
             # Save all products from ids
-            save_scraped_products(product_ids=product_ids)
+            save_scraped_products(task_id=task.pk)
             return HttpResponseRedirect(self.success_url)
         return render(request, self.template_name, {"form": form})

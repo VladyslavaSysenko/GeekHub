@@ -11,3 +11,7 @@ class Product(models.Model):
     current_price = models.DecimalField(max_digits=10, decimal_places=2)
     old_price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
+
+
+class ScrapingTask(models.Model):
+    product_ids = models.TextField()

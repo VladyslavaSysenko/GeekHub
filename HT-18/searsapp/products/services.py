@@ -3,21 +3,23 @@ import subprocess
 import time
 from sys import stderr, stdin, stdout
 
-from .models import Product
+from .models import Product, ScrapingTask
 from .scraper import ProductScraper
 
 
-def save_scraped_products(product_ids: list[str]) -> None:
+def save_scraped_products(task_id: int) -> None:
     command = (
         'python manage.py shell --command="from products.services import'
-        f" _save_products_details; _save_products_details({product_ids})"
+        f" _save_products_details; _save_products_details({task_id})"
     )
     subprocess.run(
         command, shell=True, check=True, stdin=stdin, stdout=stdout, stderr=stderr
     )
 
 
-def _save_products_details(product_ids: list[str]) -> None:
+def _save_products_details(task_id: int) -> None:
+    task = ScrapingTask.objects.get(pk=task_id)
+    product_ids = task.product_ids.split(",")
     for product_id in product_ids:
         scraping_result = ProductScraper(product_id).get_product_details()
         if scraping_result.success:
@@ -43,6 +45,9 @@ def _save_products_details(product_ids: list[str]) -> None:
 
         # Give time for site so that it won't block other requests
         time.sleep(0.5)
+
+    # Delete task from db
+    task.delete()
 
 
 def is_valid_ids(ids: list[str]) -> bool:
